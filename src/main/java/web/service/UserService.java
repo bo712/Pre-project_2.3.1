@@ -31,13 +31,15 @@ public class UserService implements IUserService {
 
     //@Transactional
     @Override
-    public void editUser(User user) {
-
+    public void editUser(long id) {
+        User user = userDao.getUserById(id);
+        userDao.editUser(user);
     }
 
     //@Transactional
     @Override
     public void deleteUser(long id) {
-
+        User user = userDao.getUserById(id);
+        userDao.deleteUser(user);
     }
 }
