@@ -1,8 +1,6 @@
 package web.dao;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,16 +35,14 @@ public class UserDao implements IUserDao {
     @Transactional
     @Override
     public void editUser(User user) {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = session.beginTransaction();
-        session.update(user);
-        transaction.commit();
-        session.close();
+        sessionFactory.getCurrentSession().update(user);
     }
 
+    @Transactional
     @Override
-    public void deleteUser(long id) {
-
+    public void deleteUser(User user) {
+        sessionFactory.getCurrentSession().delete(user);
+        System.out.println();
     }
 
     @Transactional
