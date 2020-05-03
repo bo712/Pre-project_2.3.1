@@ -17,11 +17,10 @@ import java.util.Objects;
 import java.util.Properties;
 
 @Configuration
-@PropertySource("classpath:db.properties")
+@PropertySource({"classpath:db.properties", "classpath:hibernate.properties"})
 @EnableTransactionManagement
 @ComponentScan("web")
-
-public class AppConfig {
+public class HibernateConfig {
 
     @Autowired
     private Environment env;
