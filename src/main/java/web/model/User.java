@@ -13,7 +13,7 @@ public class User {
     String lastName;
 
     @Column(name = "salary")
-    int salary;
+    long salary;
 
     @Id
     @Column(name = "id")
@@ -50,7 +50,7 @@ public class User {
         this.lastName = lastName;
     }
 
-    public int getSalary() {
+    public long getSalary() {
         return salary;
     }
 
