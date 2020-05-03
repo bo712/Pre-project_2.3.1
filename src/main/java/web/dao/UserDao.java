@@ -30,4 +30,14 @@ public class UserDao implements IUserDao {
     public void addUser(User user) {
         sessionFactory.getCurrentSession().save(user);
     }
+
+    @Override
+    public void editUser(User user) {
+
+    }
+
+    @Override
+    public void deleteUser(long id) {
+
+    }
 }
