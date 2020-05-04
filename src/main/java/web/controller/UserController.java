@@ -33,6 +33,21 @@ public class UserController {
         return "users";
     }
 
+    @RequestMapping("/addForm")
+    public String getAddForm(ModelMap model) {
+        return "add";
+    }
+
+    @RequestMapping("/add")
+    public RedirectView addUser(ModelMap model,
+                                @RequestParam("name") String name,
+                                @RequestParam("lastName") String lastName,
+                                @RequestParam("salary") Long salary) {
+        User user = new User(name, lastName, salary);
+        userService.addUser(user);
+        return new RedirectView("users");
+    }
+
     @RequestMapping("/edit")
     public String editUser(ModelMap model, @RequestParam("id") Long id) {
         User user = userService.getUserById(id);

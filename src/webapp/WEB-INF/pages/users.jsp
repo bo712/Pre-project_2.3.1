@@ -26,5 +26,6 @@
         </tr>
     </c:forEach>
 </table>
+<a href="<c:url value="/addForm"/>">Add new user</a>
 </body>
 </html>
