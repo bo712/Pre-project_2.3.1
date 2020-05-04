@@ -13,7 +13,7 @@ public class User {
     String lastName;
 
     @Column(name = "salary")
-    long salary;
+    double salary;
 
     @Id
     @Column(name = "id")
@@ -23,13 +23,13 @@ public class User {
     public User() {
     }
 
-    public User(String name, String lastName, long salary) {
+    public User(String name, String lastName, double salary) {
         this.name = name;
         this.lastName = lastName;
         this.salary = salary;
     }
 
-    public User(String name, String lastName, long salary, long id) {
+    public User(String name, String lastName, double salary, long id) {
         this(name, lastName, salary);
         this.id = id;
     }
@@ -50,11 +50,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public long getSalary() {
+    public double getSalary() {
         return salary;
     }
 
-    public void setSalary(long salary) {
+    public void setSalary(double salary) {
         this.salary = salary;
     }
 
