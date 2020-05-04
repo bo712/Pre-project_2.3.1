@@ -39,7 +39,9 @@ public class UserService implements IUserService {
     @Override
     public void deleteUser(long id) {
         User user = userDao.getUserById(id);
-        userDao.deleteUser(user);
+        if (user != null) {
+            userDao.deleteUser(user);
+        }
     }
 
     @Override
