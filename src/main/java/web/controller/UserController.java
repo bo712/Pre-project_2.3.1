@@ -42,9 +42,13 @@ public class UserController {
     public RedirectView addUser(ModelMap model,
                                 @RequestParam("name") String name,
                                 @RequestParam("lastName") String lastName,
-                                @RequestParam("salary") Long salary) {
-        User user = new User(name, lastName, salary);
-        userService.addUser(user);
+                                @RequestParam("salary") String strSalary) {
+
+        double salary = parseSalary(strSalary);
+        if (salary != -1) {
+            User user = new User(name, lastName, salary);
+            userService.addUser(user);
+        }
         return new RedirectView("users");
     }
 
@@ -63,9 +67,11 @@ public class UserController {
                                    @RequestParam("id") Long id,
                                    @RequestParam("name") String name,
                                    @RequestParam("lastName") String lastName,
-                                   @RequestParam("salary") Long salary) {
-        User user = userService.getUserById(id);
-        if (user != null) {
+                                   @RequestParam("salary") String strSalary) {
+
+        User user;
+        double salary = parseSalary(strSalary);
+        if (salary != -1 && (user = userService.getUserById(id)) != null) {
             user.setName(name);
             user.setLastName(lastName);
             user.setSalary(salary);
@@ -78,5 +84,15 @@ public class UserController {
     public RedirectView deleteUser(ModelMap model, @RequestParam("id") Long id) {
         userService.deleteUser(id);
         return new RedirectView("users");
+    }
+
+    private double parseSalary(String salary) {
+        double result = -1.0;
+        try {
+            result = Double.parseDouble(salary);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
