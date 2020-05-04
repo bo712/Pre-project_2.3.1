@@ -31,8 +31,7 @@ public class UserService implements IUserService {
 
     //@Transactional
     @Override
-    public void editUser(long id) {
-        User user = userDao.getUserById(id);
+    public void editUser(User user) {
         userDao.editUser(user);
     }
 
@@ -41,5 +40,10 @@ public class UserService implements IUserService {
     public void deleteUser(long id) {
         User user = userDao.getUserById(id);
         userDao.deleteUser(user);
+    }
+
+    @Override
+    public User getUserById(long id) {
+        return userDao.getUserById(id);
     }
 }

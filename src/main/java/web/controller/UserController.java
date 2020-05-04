@@ -35,8 +35,28 @@ public class UserController {
 
     @RequestMapping("/edit")
     public String editUser(ModelMap model, @RequestParam("id") Long id) {
-        userService.editUser(id);
+        User user = userService.getUserById(id);
+        if (user != null) {
+            model.addAttribute("user", user);
+            return "edit";
+        }
         return "users";
+    }
+
+    @RequestMapping("/save")
+    public RedirectView saveEdited(ModelMap model,
+                                   @RequestParam("id") Long id,
+                                   @RequestParam("name") String name,
+                                   @RequestParam("lastName") String lastName,
+                                   @RequestParam("salary") Long salary) {
+        User user = userService.getUserById(id);
+        if (user != null) {
+            user.setName(name);
+            user.setLastName(lastName);
+            user.setSalary(salary);
+            userService.editUser(user);
+        }
+        return new RedirectView("users");
     }
 
     @RequestMapping("/delete")

@@ -54,7 +54,7 @@ public class User {
         return salary;
     }
 
-    public void setSalary(int salary) {
+    public void setSalary(long salary) {
         this.salary = salary;
     }
 
