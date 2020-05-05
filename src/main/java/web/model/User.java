@@ -6,19 +6,18 @@ import javax.persistence.*;
 @Table(name = "users")
 public class User {
 
-    @Column(name = "name")
-    String name;
+    @Column
+    private String name;
 
-    @Column(name = "lastName")
-    String lastName;
+    @Column
+    private String lastName;
 
-    @Column(name = "salary")
-    double salary;
+    @Column
+    private double salary;
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private long id;
 
     public User() {
     }
@@ -27,11 +26,6 @@ public class User {
         this.name = name;
         this.lastName = lastName;
         this.salary = salary;
-    }
-
-    public User(String name, String lastName, double salary, long id) {
-        this(name, lastName, salary);
-        this.id = id;
     }
 
     public String getName() {
