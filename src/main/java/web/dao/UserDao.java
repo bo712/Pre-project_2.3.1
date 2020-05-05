@@ -26,7 +26,6 @@ public class UserDao implements IUserDao {
     @Override
     public List<User> getAllUsers() {
         TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User", User.class);
-        System.out.println("From listUsers");
         return query.getResultList();
     }
 
