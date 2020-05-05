@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 import web.model.User;
-import web.service.UserService;
+import web.service.IUserService;
 
 import java.util.List;
 
 @Controller
 public class UserController {
 
-    private final UserService userService;
+    private IUserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public void setUserService(IUserService userService) {
         this.userService = userService;
     }
 
