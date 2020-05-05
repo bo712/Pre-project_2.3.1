@@ -3,7 +3,6 @@ package web.dao;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
 
 import javax.persistence.TypedQuery;
@@ -19,33 +18,28 @@ public class UserDao implements IUserDao {
         this.sessionFactory = sessionFactory;
     }
 
-    @Transactional
-    @Override
-    public List<User> getAllUsers() {
-        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("FROM User", User.class);
-        return query.getResultList();
-    }
-
-    @Transactional
     @Override
     public void addUser(User user) {
         sessionFactory.getCurrentSession().save(user);
     }
 
-    @Transactional
+    @Override
+    public List<User> getAllUsers() {
+        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User", User.class);
+        System.out.println("From listUsers");
+        return query.getResultList();
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        sessionFactory.getCurrentSession().delete(user);
+    }
+
     @Override
     public void editUser(User user) {
         sessionFactory.getCurrentSession().update(user);
     }
 
-    @Transactional
-    @Override
-    public void deleteUser(User user) {
-        sessionFactory.getCurrentSession().delete(user);
-        System.out.println();
-    }
-
-    @Transactional
     @Override
     public User getUserById(long id) {
         return sessionFactory.getCurrentSession().get(User.class, id);
