@@ -7,11 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
+import web.model.Role;
 import web.model.User;
 import web.service.IUserService;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class UserController {
@@ -21,11 +24,6 @@ public class UserController {
     @Autowired
     public void setUserService(IUserService userService) {
         this.userService = userService;
-    }
-
-    @RequestMapping("/")
-    public String getIndex() {
-        return "index";
     }
 
     @RequestMapping(value = "hello", method = RequestMethod.GET)
@@ -59,11 +57,24 @@ public class UserController {
     public RedirectView addUser(ModelMap model,
                                 @RequestParam("name") String name,
                                 @RequestParam("lastName") String lastName,
-                                @RequestParam("salary") String strSalary) {
+                                @RequestParam("salary") String strSalary,
+                                @RequestParam("username") String username,
+                                @RequestParam("password") String password,
+                                @RequestParam(required = false, name = "role") String[] rolesArr) {
 
         double salary = parseSalary(strSalary);
+        Set<Role> roles = new HashSet<>();
+
+        if (rolesArr != null) {
+            for (String s : rolesArr) {
+                roles.add(new Role(s));
+            }
+        } else {
+            roles.add(new Role("user"));
+        }
+
         if (salary != -1) {
-            User user = new User(name, lastName, salary);
+            User user = new User(name, lastName, salary, username, password, roles);
             userService.addUser(user);
         }
         return new RedirectView("users");
