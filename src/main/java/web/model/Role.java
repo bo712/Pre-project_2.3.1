@@ -16,10 +16,14 @@ public class Role implements GrantedAuthority {
     @Column
     private String role;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")
+    @ManyToMany(/*fetch = FetchType.EAGER,*/ mappedBy = "roles")
     private Set<User> users;
 
     public Role() {
+    }
+
+    public Role(String role) {
+        this.role = role;
     }
 
     public long getId() {
