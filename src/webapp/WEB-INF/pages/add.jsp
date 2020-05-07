@@ -21,6 +21,20 @@
             <td><input type="text" name="salary" required></td>
         </tr>
         <tr>
+            <td>Username</td>
+            <td><input type="text" name="username" required></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input type="text" name="password" required></td>
+        </tr>
+        <tr>
+            <td>Role(s)</td>
+            <td><input type="checkbox" name="role" value="admin">Administrator<br>
+                <input type="checkbox" name="role" value="user">User<br>
+            </td>
+        </tr>
+        <tr>
             <td><input type="submit" value="Save user"></td>
         </tr>
     </table>
