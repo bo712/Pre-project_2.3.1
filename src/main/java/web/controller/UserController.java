@@ -54,25 +54,26 @@ public class UserController {
     }
 
     @RequestMapping("/add")
-    public RedirectView addUser(ModelMap model,
-                                @RequestParam("name") String name,
+    public RedirectView addUser(@RequestParam("name") String name,
                                 @RequestParam("lastName") String lastName,
                                 @RequestParam("salary") String strSalary,
                                 @RequestParam("username") String username,
                                 @RequestParam("password") String password,
-                                @RequestParam(required = false, name = "role") String[] rolesArr) {
+                                @RequestParam(required = false, name = "roleAdmin") String roleAdmin,
+                                @RequestParam(required = false, name = "roleUser") String roleUser) {
 
-        double salary = parseSalary(strSalary);
         Set<Role> roles = new HashSet<>();
-
-        if (rolesArr != null) {
-            for (String s : rolesArr) {
-                roles.add(new Role(s));
-            }
-        } else {
+        if ("on".equals(roleAdmin)) {
+            roles.add(new Role("admin"));
+        }
+        if ("on".equals(roleUser)) {
+            roles.add(new Role("user"));
+        }
+        if (roles.size() == 0) {
             roles.add(new Role("user"));
         }
 
+        double salary = parseSalary(strSalary);
         if (salary != -1) {
             User user = new User(name, lastName, salary, username, password, roles);
             userService.addUser(user);
@@ -91,11 +92,26 @@ public class UserController {
     }
 
     @RequestMapping("/save")
-    public RedirectView saveEdited(ModelMap model,
-                                   @RequestParam("id") Long id,
+    public RedirectView saveEdited(@RequestParam("id") long id,
                                    @RequestParam("name") String name,
                                    @RequestParam("lastName") String lastName,
-                                   @RequestParam("salary") String strSalary) {
+                                   @RequestParam("salary") String strSalary,
+                                   @RequestParam("username") String username,
+                                   @RequestParam("password") String password,
+                                   @RequestParam(required = false, name = "roleAdmin") String roleAdmin,
+                                   @RequestParam(required = false, name = "roleUser") String roleUser) {
+
+        Set<Role> roles = new HashSet<>();
+
+        if ("on".equals(roleAdmin)) {
+            roles.add(new Role("admin"));
+        }
+        if ("on".equals(roleUser)) {
+            roles.add(new Role("user"));
+        }
+        if (roles.size() == 0) {
+            roles.add(new Role("user"));
+        }
 
         User user;
         double salary = parseSalary(strSalary);
@@ -103,13 +119,16 @@ public class UserController {
             user.setName(name);
             user.setLastName(lastName);
             user.setSalary(salary);
+            user.setUsername(username);
+            user.setPassword(password);
+            user.setRoles(roles);
             userService.editUser(user);
         }
         return new RedirectView("users");
     }
 
     @RequestMapping("/delete")
-    public RedirectView deleteUser(ModelMap model, @RequestParam("id") Long id) {
+    public RedirectView deleteUser(@RequestParam("id") Long id) {
         userService.deleteUser(id);
         return new RedirectView("users");
     }
