@@ -30,8 +30,8 @@
         </tr>
         <tr>
             <td>Role(s)</td>
-            <td><input type="checkbox" name="role" value="admin">Administrator<br>
-                <input type="checkbox" name="role" value="user">User<br>
+            <td><input type="checkbox" name="roleAdmin">Administrator<br>
+                <input type="checkbox" name="roleUser">User<br>
             </td>
         </tr>
         <tr>
