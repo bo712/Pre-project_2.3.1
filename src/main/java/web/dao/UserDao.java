@@ -1,46 +1,41 @@
 package web.dao;
 
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import web.model.User;
 
-import javax.persistence.TypedQuery;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
 public class UserDao implements IUserDao {
 
-    private SessionFactory sessionFactory;
-
-    @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    /* container creates the EntityManager from the EntityManagerFactory */
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public void addUser(User user) {
-        sessionFactory.getCurrentSession().save(user);
+        entityManager.persist(user);
     }
 
     @Override
     public List<User> getAllUsers() {
-        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User", User.class);
-        return query.getResultList();
+        return entityManager.createQuery("from User", User.class).getResultList();
     }
 
     @Override
     public void deleteUser(User user) {
-        sessionFactory.getCurrentSession().delete(user);
+        entityManager.remove(user);
     }
 
     @Override
     public void editUser(User user) {
-        sessionFactory.getCurrentSession().update(user);
+        entityManager.merge(user);
     }
 
     @Override
     public User getUserById(long id) {
-        return sessionFactory.getCurrentSession().get(User.class, id);
+        return entityManager.find(User.class, id);
     }
 }
