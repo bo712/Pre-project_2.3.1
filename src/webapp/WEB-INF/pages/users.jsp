@@ -7,20 +7,28 @@
 </head>
 <body>
 
-<table border="1" width="30%" cellpadding="1">
+<table border="1" width="40%" cellpadding="1">
     <colgroup>
-        <col span="5" style="background:aquamarine"><!-- Set color for table cells-->
+        <col span="9" style="background:aquamarine"><!-- Set color for table cells-->
     </colgroup>
     <tr>
+        <th>ID</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Salary</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Role</th>
     </tr>
     <c:forEach var="user" items="${users}">
         <tr>
+            <td>${user.id}</td>
             <td>${user.name}</td>
             <td>${user.lastName}</td>
             <td>${user.salary}</td>
+            <td>${user.username}</td>
+            <td>${user.password}</td>
+            <td>${user.userRoles}</td>
             <td><a href="<c:url value="/edit?id=${user.id}"/>">Edit user</a></td>
             <td><a href="<c:url value="/delete?id=${user.id}"/>">Delete user</a></td>
         </tr>
