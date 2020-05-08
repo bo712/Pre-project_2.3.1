@@ -34,18 +34,12 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
-            joinColumns = @JoinColumn(name = "users_id"),
-            inverseJoinColumns = @JoinColumn(name = "roles_id")
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")}
     )
     private Set<Role> roles = new HashSet<>();
 
     public User() {
-    }
-
-    public User(String name, String lastName, double salary) {
-        this.name = name;
-        this.lastName = lastName;
-        this.salary = salary;
     }
 
     public User(String name, String lastName, double salary, String username, String password, Set<Role> roles) {
