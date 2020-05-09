@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 import web.model.Role;
 import web.model.User;
+import web.service.IRoleService;
 import web.service.IUserService;
 
 import java.util.ArrayList;
@@ -21,9 +22,16 @@ public class UserController {
 
     private IUserService userService;
 
+    private IRoleService roleService;
+
     @Autowired
     public void setUserService(IUserService userService) {
         this.userService = userService;
+    }
+
+    @Autowired
+    public void setRoleService(IRoleService roleService) {
+        this.roleService = roleService;
     }
 
     @RequestMapping(value = "hello", method = RequestMethod.GET)
@@ -33,6 +41,7 @@ public class UserController {
         messages.add("I'm Spring MVC-SECURITY application");
         messages.add("5.2.0 version by sep'19 ");
         model.addAttribute("messages", messages);
+        roleService.setDefaultRoles();
         return "hello";
     }
 
@@ -62,19 +71,17 @@ public class UserController {
                                 @RequestParam(required = false, name = "roleAdmin") String roleAdmin,
                                 @RequestParam(required = false, name = "roleUser") String roleUser) {
 
-        Set<Role> roles = new HashSet<>();
-        if ("on".equals(roleAdmin)) {
-            roles.add(new Role("admin"));
-        }
-        if ("on".equals(roleUser)) {
-            roles.add(new Role("user"));
-        }
-        if (roles.size() == 0) {
-            roles.add(new Role("user"));
-        }
-
         double salary = parseSalary(strSalary);
         if (salary != -1) {
+            Set<Role> roles = new HashSet<>();
+            if ("on".equals(roleAdmin) && "on".equals(roleUser)) {
+                roles.add(new Role(1, "admin"));
+                roles.add(new Role());
+            } else if ("on".equals(roleAdmin)) {
+                roles.add(new Role(1, "admin"));
+            } else {
+                roles.add(new Role());
+            }
             User user = new User(name, lastName, salary, username, password, roles);
             userService.addUser(user);
         }
@@ -101,27 +108,25 @@ public class UserController {
                                    @RequestParam(required = false, name = "roleAdmin") String roleAdmin,
                                    @RequestParam(required = false, name = "roleUser") String roleUser) {
 
-        Set<Role> roles = new HashSet<>();
 
-        if ("on".equals(roleAdmin)) {
-            roles.add(new Role("admin"));
-        }
-        if ("on".equals(roleUser)) {
-            roles.add(new Role("user"));
-        }
-        if (roles.size() == 0) {
-            roles.add(new Role("user"));
-        }
-
-        User user;
+        User user = userService.getUserById(id);
         double salary = parseSalary(strSalary);
-        if (salary != -1 && (user = userService.getUserById(id)) != null) {
+        Set<Role> roles = new HashSet<>();
+        if ("on".equals(roleAdmin) && "on".equals(roleUser)) {
+            roles.add(new Role(1, "admin"));
+            roles.add(new Role());
+        } else if ("on".equals(roleAdmin)) {
+            roles.add(new Role(1, "admin"));
+        } else {
+            roles.add(new Role());
+        }
+        if (salary != -1 && user != null) {
             user.setName(name);
             user.setLastName(lastName);
             user.setSalary(salary);
             user.setUsername(username);
             user.setPassword(password);
-            user.setRoles(roles);
+            user.setRoles(roles); //надо сетить роли отдельно, чтобы не создавать новых записей roles
             userService.editUser(user);
         }
         return new RedirectView("users");
