@@ -20,17 +20,13 @@ import java.util.Set;
 @Controller
 public class UserController {
 
-    private IUserService userService;
+    private final IUserService userService;
 
-    private IRoleService roleService;
+    private final IRoleService roleService;
 
     @Autowired
-    public void setUserService(IUserService userService) {
+    public UserController(IUserService userService, IRoleService roleService) {
         this.userService = userService;
-    }
-
-    @Autowired
-    public void setRoleService(IRoleService roleService) {
         this.roleService = roleService;
     }
 
@@ -39,14 +35,13 @@ public class UserController {
         List<String> messages = new ArrayList<>();
         messages.add("Hello!");
         messages.add("I'm Spring MVC-SECURITY application");
-        messages.add("5.2.0 version by sep'19 ");
         model.addAttribute("messages", messages);
-        roleService.setDefaultRoles();
         return "hello";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginPage() {
+        roleService.setDefaultRoles();
         return "login";
     }
 
@@ -73,15 +68,7 @@ public class UserController {
 
         double salary = parseSalary(strSalary);
         if (salary != -1) {
-            Set<Role> roles = new HashSet<>();
-            if ("on".equals(roleAdmin) && "on".equals(roleUser)) {
-                roles.add(new Role(1, "admin"));
-                roles.add(new Role());
-            } else if ("on".equals(roleAdmin)) {
-                roles.add(new Role(1, "admin"));
-            } else {
-                roles.add(new Role());
-            }
+            Set<Role> roles = fillRoles(roleAdmin, roleUser);
             User user = new User(name, lastName, salary, username, password, roles);
             userService.addUser(user);
         }
@@ -111,22 +98,14 @@ public class UserController {
 
         User user = userService.getUserById(id);
         double salary = parseSalary(strSalary);
-        Set<Role> roles = new HashSet<>();
-        if ("on".equals(roleAdmin) && "on".equals(roleUser)) {
-            roles.add(new Role(1, "admin"));
-            roles.add(new Role());
-        } else if ("on".equals(roleAdmin)) {
-            roles.add(new Role(1, "admin"));
-        } else {
-            roles.add(new Role());
-        }
+        Set<Role> roles = fillRoles(roleAdmin, roleUser);
         if (salary != -1 && user != null) {
             user.setName(name);
             user.setLastName(lastName);
             user.setSalary(salary);
             user.setUsername(username);
             user.setPassword(password);
-            user.setRoles(roles); //надо сетить роли отдельно, чтобы не создавать новых записей roles
+            user.setRoles(roles);
             userService.editUser(user);
         }
         return new RedirectView("users");
@@ -136,6 +115,19 @@ public class UserController {
     public RedirectView deleteUser(@RequestParam("id") Long id) {
         userService.deleteUser(id);
         return new RedirectView("users");
+    }
+
+    private Set<Role> fillRoles(String roleAdmin, String roleUser) {
+        Set<Role> roles = new HashSet<>();
+        if ("on".equals(roleAdmin) && "on".equals(roleUser)) {
+            roles.add(new Role(1, "admin"));
+            roles.add(new Role());
+        } else if ("on".equals(roleAdmin)) {
+            roles.add(new Role(1, "admin"));
+        } else {
+            roles.add(new Role());
+        }
+        return roles;
     }
 
     private double parseSalary(String salary) {
