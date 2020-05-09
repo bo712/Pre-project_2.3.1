@@ -11,22 +11,18 @@ import java.util.Set;
 public class Role implements GrantedAuthority {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column
     private String role;
 
-    @ManyToMany(fetch = FetchType.EAGER/*, mappedBy = "roles"*/)
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = {@JoinColumn(name = "role_id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id")}
-    )
+    @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<>();
 
     public Role() {
-        this.role = "user"; //we don't need roleless users. So, every new user by default will be "user".
+        /* we don't need roleless users. So, every new user by default will be "user" */
+        this.role = "user";
+        this.id = 2;
     }
 
     public Role(long id, String role) {
@@ -68,13 +64,6 @@ public class Role implements GrantedAuthority {
         this.role = role;
     }
 
-//    public Set<User> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(Set<User> users) {
-//        this.users = users;
-//    }
 
     @Override
     public String getAuthority() {
