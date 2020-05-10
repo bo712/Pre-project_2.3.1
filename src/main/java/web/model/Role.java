@@ -21,7 +21,7 @@ public class Role implements GrantedAuthority {
 
     public Role() {
         /* we don't need roleless users. So, every new user by default will be "user" */
-        this.role = "user";
+        this.role = "USER";
         this.id = 2;
     }
 

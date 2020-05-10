@@ -16,8 +16,8 @@ public class RoleDao implements IRoleDao {
 
     @Override
     public void setDefaultRoles() {
-        entityManager.persist(new Role(1, "admin"));
-        entityManager.persist(new Role(2, "user"));
+        entityManager.persist(new Role(1, "ADMIN"));
+        entityManager.persist(new Role(2, "USER"));
     }
 
     @Override

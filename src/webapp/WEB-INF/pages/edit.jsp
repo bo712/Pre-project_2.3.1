@@ -34,8 +34,8 @@
         </tr>
         <tr>
             <td>Role(s)</td>
-            <td><input type="checkbox" name="roleAdmin" ${user.userRoles.contains("admin") ? "checked" : ""}>Administrator<br>
-                <input type="checkbox" name="roleUser" ${user.userRoles.contains("user") ? "checked" : ""}>User<br>
+            <td><input type="checkbox" name="roleAdmin" ${user.userRoles.contains("ADMIN") ? "checked" : ""}>Administrator<br>
+                <input type="checkbox" name="roleUser" ${user.userRoles.contains("USER") ? "checked" : ""}>User<br>
             </td>
         </tr>
         <tr>

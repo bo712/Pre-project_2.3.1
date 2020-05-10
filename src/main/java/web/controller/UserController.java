@@ -120,10 +120,10 @@ public class UserController {
     private Set<Role> fillRoles(String roleAdmin, String roleUser) {
         Set<Role> roles = new HashSet<>();
         if ("on".equals(roleAdmin) && "on".equals(roleUser)) {
-            roles.add(new Role(1, "admin"));
+            roles.add(new Role(1, "ADMIN"));
             roles.add(new Role());
         } else if ("on".equals(roleAdmin)) {
-            roles.add(new Role(1, "admin"));
+            roles.add(new Role(1, "ADMIN"));
         } else {
             roles.add(new Role());
         }
