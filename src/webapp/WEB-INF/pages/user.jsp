@@ -30,6 +30,5 @@
         <td>${user.userRoles}</td>
     </tr>
 </table>
-<a href="<c:url value="/admin/add"/>">Add new user</a>
 </body>
 </html>

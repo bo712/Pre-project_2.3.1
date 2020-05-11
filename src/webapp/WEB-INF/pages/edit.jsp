@@ -6,7 +6,7 @@
     <title>Edit user</title>
 </head>
 <body>
-<form method="post" action="<c:url value="admin/save"/>">
+<form method="post" action="<c:url value="/admin/save"/>">
     <table width="30%">
         <tr>
             <td>Id</td>
