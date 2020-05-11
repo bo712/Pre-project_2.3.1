@@ -29,11 +29,11 @@
             <td>${user.username}</td>
             <td>${user.password}</td>
             <td>${user.userRoles}</td>
-            <td><a href="<c:url value="/edit?id=${user.id}"/>">Edit user</a></td>
-            <td><a href="<c:url value="/delete?id=${user.id}"/>">Delete user</a></td>
+            <td><a href="<c:url value="/admin/edit?id=${user.id}"/>">Edit user</a></td>
+            <td><a href="<c:url value="/admin/delete?id=${user.id}"/>">Delete user</a></td>
         </tr>
     </c:forEach>
 </table>
-<a href="<c:url value="/addForm"/>">Add new user</a>
+<a href="<c:url value="/admin/add"/>">Add new user</a>
 </body>
 </html>
