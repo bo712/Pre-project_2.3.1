@@ -38,4 +38,12 @@ public class UserDao implements IUserDao {
     public User getUserById(long id) {
         return entityManager.find(User.class, id);
     }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return entityManager
+                .createQuery("FROM User where username=:username", User.class)
+                .setParameter("username", username)
+                .getSingleResult();
+    }
 }

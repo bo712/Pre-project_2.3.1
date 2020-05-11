@@ -50,4 +50,11 @@ public class UserService implements IUserService {
     public User getUserById(long id) {
         return userDao.getUserById(id);
     }
+
+    @Transactional
+    @Override
+    public User getUserByUsername(String username) {
+        return userDao.getUserByUsername(username);
+    }
+
 }
