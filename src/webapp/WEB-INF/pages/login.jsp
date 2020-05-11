@@ -11,6 +11,6 @@
     <input name="j_password"/>
     <input type="submit"/>
 </form>
-
+<a href="<c:url value="/register"/>">Sign up</a>
 </body>
 </html>

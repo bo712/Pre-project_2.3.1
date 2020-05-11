@@ -9,19 +9,17 @@
 
 <table border="1" width="40%" cellpadding="1">
     <colgroup>
-        <col span="7" style="background:burlywood"><!-- Set color for table cells-->
+        <col span="6" style="background:burlywood"><!-- Set color for table cells-->
     </colgroup>
     <tr>
-        <th>ID</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Salary</th>
         <th>Username</th>
         <th>Password</th>
-        <th>Role</th>
+        <th>Role(s)</th>
     </tr>
     <tr>
-        <td>${user.id}</td>
         <td>${user.name}</td>
         <td>${user.lastName}</td>
         <td>${user.salary}</td>
