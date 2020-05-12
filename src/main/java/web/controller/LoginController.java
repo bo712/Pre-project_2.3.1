@@ -53,7 +53,7 @@ public class LoginController {
         User user = userService.getUserByUsername(username);
         if (user == null) {
             Set<Role> roles = new HashSet<>();
-            roles.add(new Role());
+            roles.add(userService.getRoleByRoleName("USER"));
             user = new User(name, lastName, username, password, roles);
             userService.addUser(user);
             map.addAttribute("user", user);

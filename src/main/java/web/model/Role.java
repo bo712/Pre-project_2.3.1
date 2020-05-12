@@ -11,6 +11,8 @@ import java.util.Set;
 public class Role implements GrantedAuthority {
 
     @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(unique = true)
@@ -20,20 +22,6 @@ public class Role implements GrantedAuthority {
     private Set<User> users = new HashSet<>();
 
     public Role() {
-        /* we don't need roleless users. So, every new user by default will be "user" */
-        this.role = "USER";
-        this.id = 2;
-    }
-
-    public Role(long id, String role) {
-        this.id = id;
-        this.role = role;
-    }
-
-    public Role(long id, String role, Set<User> users) {
-        this.id = id;
-        this.role = role;
-        this.users = users;
     }
 
     public Role(String role) {
@@ -63,7 +51,6 @@ public class Role implements GrantedAuthority {
     public void setRole(String role) {
         this.role = role;
     }
-
 
     @Override
     public String getAuthority() {

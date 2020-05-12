@@ -118,7 +118,7 @@ public class AdminController {
             roles.add(userService.getRoleByRoleName(role));
         }
         if (roles.size() == 0) {
-            roles.add(new Role());
+            roles.add(userService.getRoleByRoleName("USER"));
         }
         return roles;
     }
