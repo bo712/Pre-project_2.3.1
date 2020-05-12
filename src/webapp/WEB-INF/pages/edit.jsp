@@ -37,8 +37,11 @@
         </tr>
         <tr>
             <td>Role(s)</td>
-            <td><input type="checkbox" name="roleAdmin" ${user.userRoles.contains("ADMIN") ? "checked" : ""}>Administrator<br>
-                <input type="checkbox" name="roleUser" ${user.userRoles.contains("USER") ? "checked" : ""}>User<br>
+            <td>
+                <c:forEach var="role" items="${roles}">
+                    <input type="checkbox" name="role"
+                           value="${role.role}" ${user.userRoles.contains(role.role) ? "checked" : ""}>${role.role}<br>
+                </c:forEach>
             </td>
         </tr>
         <tr>
