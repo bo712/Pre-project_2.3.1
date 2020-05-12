@@ -21,4 +21,6 @@ public interface IUserDao {
     User getUserByUsername(String username);
 
     Set<Role> getBdRoles();
+
+    Role getRoleByRoleName(String role);
 }

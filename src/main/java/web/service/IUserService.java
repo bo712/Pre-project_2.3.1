@@ -21,4 +21,6 @@ public interface IUserService {
     User getUserByUsername(String username);
 
     Set<Role> getBdRoles();
+
+    Role getRoleByRoleName(String role);
 }

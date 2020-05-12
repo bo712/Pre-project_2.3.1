@@ -64,4 +64,9 @@ public class UserService implements IUserService {
         return userDao.getBdRoles();
     }
 
+    @Override
+    public Role getRoleByRoleName(String role) {
+        return userDao.getRoleByRoleName(role);
+    }
+
 }

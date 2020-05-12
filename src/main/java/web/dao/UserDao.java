@@ -56,4 +56,13 @@ public class UserDao implements IUserDao {
         List<Role> roles = entityManager.createQuery("FROM Role", Role.class).getResultList();
         return new HashSet<>(roles);
     }
+
+    @Override
+    public Role getRoleByRoleName(String roleName) {
+        List<Role> list = entityManager
+                .createQuery("FROM Role where role=:roleName", Role.class)
+                .setParameter("roleName", roleName)
+                .getResultList();
+        return list.size() == 0 ? null : list.get(0);
+    }
 }
