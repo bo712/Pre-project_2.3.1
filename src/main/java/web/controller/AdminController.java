@@ -47,6 +47,8 @@ public class AdminController {
 
     @GetMapping("/admin/add")
     public String getAddForm(ModelMap model) {
+        Set<Role> roles = userService.getBdRoles();
+        model.addAttribute("roles", roles);
         return "add";
     }
 
@@ -56,12 +58,12 @@ public class AdminController {
                           @RequestParam("salary") String strSalary,
                           @RequestParam("username") String username,
                           @RequestParam("password") String password,
-                          @RequestParam(required = false, name = "roleAdmin") String roleAdmin,
-                          @RequestParam(required = false, name = "roleUser") String roleUser) {
+                          @RequestParam(required = false, name = "role") String[] rolesArr) {
+
 
         double salary = parseSalary(strSalary);
         if (salary != -1) {
-            Set<Role> roles = fillRoles(roleAdmin, roleUser);
+            Set<Role> roles = fillRoles(rolesArr);
             User user = new User(name, lastName, salary, username, password, roles);
             userService.addUser(user);
         }
@@ -72,7 +74,9 @@ public class AdminController {
     public String editUser(ModelMap model, @RequestParam("id") Long id) {
         User user = userService.getUserById(id);
         if (user != null) {
+            Set<Role> roles = userService.getBdRoles();
             model.addAttribute("user", user);
+            model.addAttribute("roles", roles);
             return "edit";
         }
         return "redirect:/admin/users";
@@ -85,12 +89,11 @@ public class AdminController {
                              @RequestParam("salary") String strSalary,
                              @RequestParam("username") String username,
                              @RequestParam("password") String password,
-                             @RequestParam(required = false, name = "roleAdmin") String roleAdmin,
-                             @RequestParam(required = false, name = "roleUser") String roleUser) {
+                             @RequestParam(required = false, name = "role") String[] rolesArr) {
 
         User user = userService.getUserById(id);
         double salary = parseSalary(strSalary);
-        Set<Role> roles = fillRoles(roleAdmin, roleUser);
+        Set<Role> roles = fillRoles(rolesArr);
         if (salary != -1 && user != null) {
             user.setName(name);
             user.setLastName(lastName);
@@ -109,14 +112,12 @@ public class AdminController {
         return "redirect:users";
     }
 
-    private Set<Role> fillRoles(String roleAdmin, String roleUser) {
+    private Set<Role> fillRoles(String[] rolesArr) {
         Set<Role> roles = new HashSet<>();
-        if ("on".equals(roleAdmin) && "on".equals(roleUser)) {
-            roles.add(new Role(1, "ADMIN"));
-            roles.add(new Role());
-        } else if ("on".equals(roleAdmin)) {
-            roles.add(new Role(1, "ADMIN"));
-        } else {
+        for (String role : rolesArr) {
+            roles.add(userService.getRoleByRoleName(role));
+        }
+        if (roles.size() == 0) {
             roles.add(new Role());
         }
         return roles;
