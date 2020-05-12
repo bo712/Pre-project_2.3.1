@@ -7,9 +7,11 @@
 </head>
 <body>
 
+<jsp:include page="logout.jsp"/>
+
 <table border="1" width="40%" cellpadding="1">
     <colgroup>
-        <col span="9" style="background:aquamarine"><!-- Set color for table cells-->
+        <col span="9" style="background:lightcoral"><!-- Set color for table cells-->
     </colgroup>
     <tr>
         <th>ID</th>

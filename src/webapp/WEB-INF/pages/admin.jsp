@@ -6,9 +6,9 @@
     <title>Admin's page</title>
 </head>
 <body>
-<p align="right">
-    <jsp:include page="/logout"/>
-</p>
+
+<jsp:include page="logout.jsp"/>
+
 <table border="1" width="40%" cellpadding="1">
     <colgroup>
         <col span="7" style="background:lightcoral"><!-- Set color for table cells-->

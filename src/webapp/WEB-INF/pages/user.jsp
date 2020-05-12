@@ -7,6 +7,8 @@
 </head>
 <body>
 
+<jsp:include page="logout.jsp"/>
+
 <table border="1" width="40%" cellpadding="1">
     <colgroup>
         <col span="6" style="background:burlywood"><!-- Set color for table cells-->

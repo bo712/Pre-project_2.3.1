@@ -6,6 +6,9 @@
     <title>Edit user</title>
 </head>
 <body>
+
+<jsp:include page="logout.jsp"/>
+
 <form method="post" action="<c:url value="/admin/edit"/>">
     <table width="30%">
         <tr>
