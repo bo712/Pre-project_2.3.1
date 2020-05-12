@@ -1,11 +1,14 @@
 package web.dao;
 
 import org.springframework.stereotype.Repository;
+import web.model.Role;
 import web.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class UserDao implements IUserDao {
@@ -46,5 +49,11 @@ public class UserDao implements IUserDao {
                 .setParameter("username", username)
                 .getResultList();
         return list.size() == 0 ? null : list.get(0);
+    }
+
+    @Override
+    public Set<Role> getBdRoles() {
+        List<Role> roles = entityManager.createQuery("FROM Role", Role.class).getResultList();
+        return new HashSet<>(roles);
     }
 }

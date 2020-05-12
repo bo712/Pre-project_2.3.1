@@ -1,8 +1,10 @@
 package web.dao;
 
+import web.model.Role;
 import web.model.User;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IUserDao {
 
@@ -17,4 +19,6 @@ public interface IUserDao {
     User getUserById(long id);
 
     User getUserByUsername(String username);
+
+    Set<Role> getBdRoles();
 }

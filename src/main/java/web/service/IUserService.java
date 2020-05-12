@@ -1,8 +1,10 @@
 package web.service;
 
+import web.model.Role;
 import web.model.User;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IUserService {
 
@@ -17,4 +19,6 @@ public interface IUserService {
     User getUserById(long id);
 
     User getUserByUsername(String username);
+
+    Set<Role> getBdRoles();
 }

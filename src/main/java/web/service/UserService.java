@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.dao.IUserDao;
+import web.model.Role;
 import web.model.User;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService implements IUserService {
@@ -55,6 +57,11 @@ public class UserService implements IUserService {
     @Override
     public User getUserByUsername(String username) {
         return userDao.getUserByUsername(username);
+    }
+
+    @Override
+    public Set<Role> getBdRoles() {
+        return userDao.getBdRoles();
     }
 
 }
