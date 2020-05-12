@@ -14,9 +14,7 @@ import web.model.User;
 import web.service.IRoleService;
 import web.service.IUserService;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class AdminController {
@@ -47,7 +45,8 @@ public class AdminController {
 
     @GetMapping("/admin/add")
     public String getAddForm(ModelMap model) {
-        Set<Role> roles = userService.getBdRoles();
+        List<Role> roles = new ArrayList<>(userService.getBdRoles());
+        roles.sort(Comparator.comparing(Role::getId));
         model.addAttribute("roles", roles);
         return "add";
     }
@@ -74,7 +73,8 @@ public class AdminController {
     public String editUser(ModelMap model, @RequestParam("id") Long id) {
         User user = userService.getUserById(id);
         if (user != null) {
-            Set<Role> roles = userService.getBdRoles();
+            List<Role> roles = new ArrayList<>(userService.getBdRoles());
+            roles.sort(Comparator.comparing(Role::getId));
             model.addAttribute("user", user);
             model.addAttribute("roles", roles);
             return "edit";
