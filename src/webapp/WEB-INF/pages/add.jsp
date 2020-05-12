@@ -32,9 +32,11 @@
             <td><input type="text" name="password" required></td>
         </tr>
         <tr>
-            <td>Role(s)</td>
-            <td><input type="checkbox" name="roleAdmin">Administrator<br>
-                <input type="checkbox" name="roleUser">User<br>
+            <td valign="top">Role(s)</td>
+            <td>
+                <c:forEach var="role" items="${roles}">
+                    <input type="checkbox" name="role" value="${role.role}">${role.role}<br>
+                </c:forEach>
             </td>
         </tr>
         <tr>
