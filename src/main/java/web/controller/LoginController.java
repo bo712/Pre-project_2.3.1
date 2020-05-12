@@ -40,7 +40,6 @@ public class LoginController {
 
     @GetMapping(value = "register")
     public String registerPage() {
-        roleService.setDefaultRoles();
         return "register";
     }
 
