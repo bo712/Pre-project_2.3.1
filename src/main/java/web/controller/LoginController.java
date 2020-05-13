@@ -38,6 +38,13 @@ public class LoginController {
         return "login";
     }
 
+    @GetMapping(value = "hello")
+    public String helloPage(Model map) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        map.addAttribute("user", user);
+        return "hello";
+    }
+
     @GetMapping(value = "register")
     public String registerPage() {
         return "register";
