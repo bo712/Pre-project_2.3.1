@@ -36,7 +36,7 @@
             <td><input type="text" name="password" required value="${user.password}"></td>
         </tr>
         <tr>
-            <td>Role(s)</td>
+            <td valign="top">Role(s)</td>
             <td>
                 <c:forEach var="role" items="${roles}">
                     <input type="checkbox" name="role"
